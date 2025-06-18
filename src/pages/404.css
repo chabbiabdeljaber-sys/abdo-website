@@ -1,0 +1,27 @@
+.notfound {
+  text-align: center;
+  margin-top: 5rem;
+  color: #1976d2;
+  animation: fadeIn 1s;
+}
+.notfound h1 {
+  font-size: 5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+.notfound__cta {
+  display: inline-block;
+  margin-top: 2rem;
+  background: #1976d2;
+  color: #fff;
+  padding: 0.8rem 2.2rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.notfound__cta:hover {
+  background: #1565c0;
+  transform: translateY(-2px) scale(1.04);
+} 

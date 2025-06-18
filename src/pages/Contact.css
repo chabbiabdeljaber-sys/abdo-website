@@ -1,0 +1,196 @@
+.contact-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(120deg, #e3f2fd 0%, #fff 100%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.contact-page {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 4.5rem auto 3.5rem auto;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
+  padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  font-family: inherit;
+  align-items: center;
+  animation: fadeIn 0.8s;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.contact-info {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-info h2 {
+  color: #1976d2;
+  font-size: 2.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.contact-info .contact-subtitle {
+  color: #388e3c;
+  font-size: 1.13rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.3rem;
+  font-size: 1.18rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-weight: 500;
+  font-size: 1.18rem;
+  background: #f4f8fb;
+  border-radius: 1.2rem;
+  padding: 1.1rem 1.3rem;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+  transition: box-shadow 0.18s, background 0.18s, transform 0.13s;
+  cursor: pointer;
+}
+.contact-detail:hover {
+  background: #e3f2fd;
+  box-shadow: 0 6px 24px rgba(25, 118, 210, 0.13);
+  transform: translateY(-2px) scale(1.03);
+}
+.contact-detail i {
+  font-size: 2.1rem;
+  color: #1976d2;
+  min-width: 2.2rem;
+  text-align: center;
+  transition: color 0.18s;
+}
+.contact-detail:hover i {
+  color: #388e3c;
+}
+.contact-details a {
+  color: #1976d2;
+  text-decoration: none;
+  transition: color 0.18s, text-decoration 0.18s;
+  font-weight: 500;
+  font-size: 1.13rem;
+}
+.contact-detail:hover a {
+  color: #388e3c;
+  text-decoration: underline;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.contact-form label {
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 0.2rem;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 1.2rem;
+  border-radius: 1.5rem;
+  border: 1.5px solid #e3f2fd;
+  font-size: 1.05rem;
+  background: #f4f8fb;
+  transition: border 0.18s, box-shadow 0.18s;
+  resize: none;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.04);
+}
+.contact-form textarea {
+  border-radius: 1.2rem;
+  min-height: 110px;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+  background: #fff;
+}
+.form-error {
+  color: #c62828;
+  font-size: 0.97rem;
+  margin-top: 0.2rem;
+  font-weight: 500;
+}
+.form-error-main {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.form-success {
+  color: #2e7d32;
+  font-size: 1.08rem;
+  text-align: center;
+  margin-top: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.contact-submit-btn {
+  background: linear-gradient(90deg, #1976d2 60%, #2e7d32 100%);
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.85rem 2.2rem;
+  font-size: 1.13rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 1.1rem auto 0 auto;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+  display: block;
+  letter-spacing: 0.01em;
+}
+.contact-submit-btn:hover,
+.contact-submit-btn:focus {
+  background: linear-gradient(90deg, #1565c0 60%, #388e3c 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 24px rgba(25, 118, 210, 0.13);
+}
+@media (max-width: 700px) {
+  .contact-page {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    margin: 1.2rem 0;
+  }
+  .contact-details {
+    gap: 1rem;
+  }
+}
+.contact-page ~ .footer, .footer {
+  z-index: 2;
+  position: relative;
+}
+.contact-loading, .contact-error {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+} 
