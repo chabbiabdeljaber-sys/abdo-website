@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "cra-template-pwa": "2.0.0",
     "firebase": "^11.9.1",
     "react": "^19.1.0",
