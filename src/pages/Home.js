@@ -22,7 +22,7 @@ function Home() {
         setFeatured(products);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load featured products.');
+        setError('Failed to load popular products.');
         setLoading(false);
       }
     };
@@ -62,19 +62,19 @@ function Home() {
         <Link to="/products" className="hero__cta">Shop Now</Link>
       </section>
       <section className="featured">
-        <h2>Featured Products</h2>
+        <h2>Popular Products</h2>
         {loading ? (
           <div className="featured__loading">
             <LoadingScreen 
-              message="Loading Featured Products" 
-              subMessage="Please wait while we fetch our eco-friendly highlights..."
+              message="Loading Popular Products" 
+              subMessage="Please wait while we fetch our popular products..."
             />
           </div>
         ) : error ? (
           <div>{error}</div>
         ) : (
           <div className="featured__list">
-            {featured.length === 0 && <div>No featured products found.</div>}
+            {featured.length === 0 && <div>No popular products found.</div>}
             {featured.map(product => (
               <div className="featured__item" key={product.id}>
                 <Link to={`/products/${product.id}`} className="featured__media-link">

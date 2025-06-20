@@ -22,7 +22,7 @@ function Cart() {
     dispatch({ type: 'CLEAR_CART' });
   };
 
-  // Fetch first 3 featured products from Firestore
+  // Fetch first 3 popular products from Firestore
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
@@ -68,7 +68,7 @@ function Cart() {
             {loadingFeatured ? (
               <div>Loading popular products...</div>
             ) : featured.length === 0 ? (
-              <div>No featured products found.</div>
+              <div>No popular products found.</div>
             ) : (
               featured.map(product => (
                 <div className="cart-empty__suggestion-card" key={product.id}>

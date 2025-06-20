@@ -205,8 +205,8 @@ const ProductManager = () => {
               className="product-manager__featured-filter"
             >
               <option value="all">All Products</option>
-              <option value="featured">Featured Products</option>
-              <option value="not-featured">Not Featured</option>
+              <option value="featured">Popular Products</option>
+              <option value="not-featured">Not Popular</option>
             </select>
           </div>
           <button 
@@ -370,7 +370,7 @@ const ProductManager = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="feature_product" style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', cursor: 'pointer' }}>
-                    <span style={{ fontWeight: 500 }}>Feature this product</span>
+                    <span style={{ fontWeight: 500 }}>Make this product popular</span>
                     <span className="feature-toggle">
                       <input
                         type="checkbox"
