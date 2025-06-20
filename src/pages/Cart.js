@@ -12,8 +12,6 @@ function Cart() {
   const [loadingFeatured, setLoadingFeatured] = useState(true);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = total > 0 ? 10 : 0; // Example shipping cost
-  const finalTotal = total + shipping;
 
   const handleQuantity = (id, quantity) => {
     if (quantity < 1) return;
@@ -116,16 +114,8 @@ function Cart() {
           </div>
           <div className="cart__summary">
             <div className="cart__summary-item">
-              <span>Subtotal:</span>
-              <span>{!isNaN(Number(total)) ? Number(total).toFixed(2) : '0.00'} DH</span>
-            </div>
-            <div className="cart__summary-item">
-              <span>Shipping:</span>
-              <span>{!isNaN(Number(shipping)) ? Number(shipping).toFixed(2) : '0.00'} DH</span>
-            </div>
-            <div className="cart__summary-item cart__summary-total">
               <span>Total:</span>
-              <span>{!isNaN(Number(finalTotal)) ? Number(finalTotal).toFixed(2) : '0.00'} DH</span>
+              <span>{!isNaN(Number(total)) ? Number(total).toFixed(2) : '0.00'} DH</span>
             </div>
             <button className="cart__checkout" onClick={() => navigate('/cart-checkout')}>Checkout</button>
             <Link to="/products" className="cart__continue-shopping">Continue Shopping</Link>

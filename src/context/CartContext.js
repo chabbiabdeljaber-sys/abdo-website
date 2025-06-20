@@ -15,13 +15,13 @@ function cartReducer(state, action) {
         return {
           ...state,
           cart: state.cart.map(i =>
-            i.id === action.product.id ? { ...i, quantity: i.quantity + 1 } : i
+            i.id === action.product.id ? { ...i, quantity: i.quantity + (action.product.quantity || 1) } : i
           ),
         };
       }
       return {
         ...state,
-        cart: [...state.cart, { ...action.product, quantity: 1 }],
+        cart: [...state.cart, { ...action.product, quantity: action.product.quantity || 1 }],
       };
     }
     case 'REMOVE_FROM_CART':
@@ -39,7 +39,7 @@ function cartReducer(state, action) {
     case 'CLEAR_CART':
       return { ...state, cart: [] };
     case 'BUY_NOW':
-      return { ...state, buyNowProduct: { ...action.product, quantity: 1 } };
+      return { ...state, buyNowProduct: { ...action.product, quantity: action.product.quantity || 1 } };
     case 'CLEAR_BUY_NOW':
       return { ...state, buyNowProduct: null };
     default:

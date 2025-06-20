@@ -102,6 +102,7 @@ function ProductDetail() {
                 type: 'ADD_TO_CART',
                 product: {
                   ...product,
+                  quantity,
                   title: product.product_name || product.title,
                   price: product.product_price || product.price,
                   image: product.product_img_url || product.image,
