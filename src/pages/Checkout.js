@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -7,30 +8,22 @@ import '../pages/Checkout.css';
 
 function Checkout() {
   const { buyNowProduct, dispatch } = useCart();
+  const { t } = useLanguage();
   const [form, setForm] = useState({ 
     name: '', 
     phone: '', 
     city: '', 
     address: '' 
   });
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Only redirect if there's no product and we're not in the submitted state
-    if (!buyNowProduct && !submitted) {
+    if (!buyNowProduct) {
       navigate('/products');
     }
-    
-    // Clear buyNowProduct after successful submission
-    return () => {
-      if (submitted) {
-        dispatch({ type: 'CLEAR_BUY_NOW' });
-      }
-    };
-  }, [dispatch, buyNowProduct, submitted, navigate]);
+  }, [buyNowProduct, navigate]);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -42,7 +35,6 @@ function Checkout() {
     setError(null);
 
     try {
-      // Prepare order item
       const orderItem = {
         product_id: buyNowProduct.id,
         product_name: buyNowProduct.title,
@@ -50,7 +42,6 @@ function Checkout() {
         product_quantity: buyNowProduct.quantity
       };
 
-      // Create order document
       const orderData = {
         full_name: form.name,
         phone_number: form.phone,
@@ -62,37 +53,25 @@ function Checkout() {
         updated_date: serverTimestamp()
       };
 
-      // Add to Firestore
-      await addDoc(collection(db, 'orders'), orderData);
+      const docRef = await addDoc(collection(db, 'orders'), orderData);
+      
+      const total = (!isNaN(Number(buyNowProduct.product_price)) ? Number(buyNowProduct.product_price) : Number(buyNowProduct.price)) * buyNowProduct.quantity;
 
-      // Show success and clear buy now product
-      setSubmitted(true);
+      dispatch({ type: 'CLEAR_BUY_NOW' });
+      navigate('/thank-you', { state: { orderId: docRef.id, total } });
     } catch (err) {
       console.error('Error creating order:', err);
-      setError('Failed to place order. Please try again.');
+      setError(t('error'));
       setLoading(false);
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="checkout__confirmation">
-        <h2>Thank you for your order!</h2>
-        <p>Your order has been placed successfully.</p>
-        <p className="checkout__payment-note">Payment will be collected on delivery.</p>
-        <Link to="/products" className="checkout__continue-shopping">
-          Continue Shopping
-        </Link>
-      </div>
-    );
-  }
-
   if (!buyNowProduct) {
     return (
       <div className="checkout__empty">
-        <h2>No product selected</h2>
+        <h2>{t('noProductSelected')}</h2>
         <Link to="/products" className="checkout__continue-shopping">
-          Continue Shopping
+          {t('continueShopping')}
         </Link>
       </div>
     );
@@ -106,7 +85,7 @@ function Checkout() {
 
   return (
     <div className="checkout">
-      <h2>Quick Checkout</h2>
+      <h2>{t('quickCheckout')}</h2>
       {error && <div className="checkout__error">{error}</div>}
       <div className="checkout__summary">
         <div className="checkout__item">
@@ -114,68 +93,68 @@ function Checkout() {
           <div className="checkout__item-details">
             <h3>{title}</h3>
             <div className="checkout__item-meta">
-              <span>Quantity: {buyNowProduct.quantity}</span>
-              <span>Price: {!isNaN(price) ? price.toFixed(2) : '0.00'} DH</span>
+              <span>{t('quantity')}: {buyNowProduct.quantity}</span>
+              <span>{t('price')}: {!isNaN(price) ? price.toFixed(2) : '0.00'} DH</span>
             </div>
             <div className="checkout__item-subtotal">
-              Subtotal: {!isNaN(total) ? total.toFixed(2) : '0.00'} DH
+              {t('subtotal')}: {!isNaN(total) ? total.toFixed(2) : '0.00'} DH
             </div>
           </div>
         </div>
         <div className="checkout__total">
-          Total: <strong>{!isNaN(total) ? total.toFixed(2) : '0.00'} DH</strong>
+          {t('total')}: <strong>{!isNaN(total) ? total.toFixed(2) : '0.00'} DH</strong>
         </div>
       </div>
       <form onSubmit={handleSubmit} className="checkout__form">
-        <h3>Shipping Information</h3>
+        <h3>{t('shippingInfo')}</h3>
         <label>
-          Full Name
+          {t('fullName')}
           <input 
             name="name" 
             value={form.name} 
             onChange={handleChange} 
             required 
-            placeholder="Enter your full name"
+            placeholder={t('enterFullName')}
           />
         </label>
         <label>
-          Phone Number
+          {t('phone')}
           <input 
             name="phone" 
             value={form.phone} 
             onChange={handleChange} 
             required 
-            placeholder="Enter your phone number"
+            placeholder={t('enterPhone')}
             pattern="[0-9\s+()-]{10,}"
             type="tel"
           />
         </label>
         <label>
-          City
+          {t('city')}
           <input 
             name="city" 
             value={form.city} 
             onChange={handleChange} 
             required 
-            placeholder="Enter your city"
+            placeholder={t('enterCity')}
           />
         </label>
         <label>
-          Address
+          {t('address')}
           <input 
             name="address" 
             value={form.address} 
             onChange={handleChange} 
             required 
-            placeholder="Enter your full address"
+            placeholder={t('enterAddress')}
           />
         </label>
         <div className="checkout__payment-note">
-          <p>Payment Method: Cash on Delivery</p>
-          <p>Total amount will be collected when your order is delivered.</p>
+          <p>{t('paymentMethod')}</p>
+          <p>{t('paymentNote')}</p>
         </div>
         <button type="submit" className="checkout__submit" disabled={loading}>
-          {loading ? 'Placing Order...' : 'Place Order'}
+          {loading ? t('placingOrder') : t('placeOrder')}
         </button>
       </form>
     </div>

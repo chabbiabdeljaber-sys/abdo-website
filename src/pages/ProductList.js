@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import LoadingScreen from '../components/LoadingScreen';
@@ -17,6 +18,7 @@ function ProductList() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const { dispatch } = useCart();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,13 +34,13 @@ function ProductList() {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
-        setError('Failed to load products. Please try again later.');
+        setError(t('error'));
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [t]);
 
   const categories = getCategories(products);
 
@@ -81,8 +83,8 @@ function ProductList() {
   if (loading) {
     return (
       <LoadingScreen 
-        message="Loading Products" 
-        subMessage="Please wait while we fetch our eco-friendly products..."
+        message={`${t('loading')} ${t('products')}`}
+        subMessage={t('loadingSubMessage')}
       />
     );
   }
@@ -95,14 +97,14 @@ function ProductList() {
     <div className="product-list" style={{ marginBottom: '3.5rem' }}>
       <h2 className="product-list__title">
         <i className="fas fa-shopping-bag" style={{ marginRight: '0.7rem', color: '#2e7d32' }}></i>
-        Products
+        {t('products')}
       </h2>
       <div className="product-list__controls">
         <div className="product-list__controls-input-wrapper">
           <i className="fas fa-search"></i>
           <input
             type="text"
-            placeholder="Search by name, description, or category..."
+            placeholder={t('searchPlaceholder')}
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
@@ -114,7 +116,7 @@ function ProductList() {
         </select>
       </div>
       <div className="product-list__grid">
-        {filtered.length === 0 && <div>No products found.</div>}
+        {filtered.length === 0 && <div>{t('noProductsFound')}</div>}
         {filtered.map(product => (
           <div className="product-card" key={product.id}>
             <Link to={`/products/${product.id}`} className="product-card__media-link">
@@ -129,9 +131,9 @@ function ProductList() {
               </div>
             </Link>
             <div className="product-card__actions">
-              <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+              <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>{t('addToCart')}</button>
             </div>
-            <button className="buy-now-btn" onClick={() => handleBuyNow(product)}>Buy Now</button>
+            <button className="buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
           </div>
         ))}
       </div>

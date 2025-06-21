@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import LoadingScreen from '../components/LoadingScreen';
 import '../pages/ProductDetail.css';
 
@@ -12,6 +13,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { dispatch } = useCart();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
 
@@ -23,24 +25,24 @@ function ProductDetail() {
         if (docSnap.exists()) {
           setProduct({ id: docSnap.id, ...docSnap.data() });
         } else {
-          setError('Product not found.');
+          setError(t('noProductsFound'));
         }
       } catch (err) {
-        setError('Failed to load product.');
+        setError(t('error'));
       }
       setLoading(false);
     };
     fetchProduct();
-  }, [id]);
+  }, [id, t]);
 
   if (loading) return (
     <LoadingScreen 
-      message="Loading Product Details" 
-      subMessage="Please wait while we fetch the product information..."
+      message={`${t('loading')} ${t('products')}`} 
+      subMessage={t('loadingSubMessage')}
     />
   );
   if (error) return <div className="product-detail__error">{error}</div>;
-  if (!product) return <div>Product not found.</div>;
+  if (!product) return <div>{t('noProductsFound')}</div>;
 
   const handleBuyNow = () => {
     dispatch({ 
@@ -66,7 +68,7 @@ function ProductDetail() {
   return (
     <div className="product-detail">
       <Link to="/products" className="product-list__back-btn">
-        <i className="fas fa-arrow-left"></i> Back to Products
+        <i className="fas fa-arrow-left"></i> {t('back')} {t('to')} {t('products')}
       </Link>
       <div className="product-detail__card">
         <div className="product-detail__img-col">
@@ -81,11 +83,11 @@ function ProductDetail() {
           </p>
           <div className="product-detail__meta">
             <span className="product-detail__category"><i className="fas fa-cube"></i> {product.category}</span>
-            <span className="product-detail__stock"><i className="fas fa-box"></i> Stock: {product.product_stock}</span>
+            <span className="product-detail__stock"><i className="fas fa-box"></i> {t('inStock')}: {product.product_stock}</span>
           </div>
           <p className="product-detail__desc">{product.product_description}</p>
           <div className="product-detail__quantity">
-            <label htmlFor="quantity">Quantity:</label>
+            <label htmlFor="quantity">{t('quantity')}:</label>
             <input
               type="number"
               id="quantity"
@@ -109,13 +111,13 @@ function ProductDetail() {
                 }
               })}
             >
-              <i className="fas fa-cart-plus"></i> Add to Cart
+              <i className="fas fa-cart-plus"></i> {t('addToCart')}
             </button>
             <button
               className="buy-now-btn"
               onClick={handleBuyNow}
             >
-              <i className="fas fa-bolt"></i> Buy Now
+              <i className="fas fa-bolt"></i> {t('buyNow')}
             </button>
           </div>
         </div>

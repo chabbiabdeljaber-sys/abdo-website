@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import '../pages/Cart.css';
 
 function Cart() {
   const { cart, dispatch } = useCart();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [featured, setFeatured] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
@@ -42,12 +44,12 @@ function Cart() {
     <div className="cart">
       <div className="cart__header">
         <Link to="/products" className="cart__back-btn">
-          <i className="fas fa-arrow-left"></i> Back to Products
+          <i className="fas fa-arrow-left"></i> {t('back')} {t('to')} {t('products')}
         </Link>
-        <h2>Shopping Cart</h2>
+        <h2>{t('yourCart')}</h2>
         {cart.length > 0 && (
           <button className="cart__clear-btn" onClick={clearCart}>
-            <i className="fas fa-trash"></i> Clear Cart
+            <i className="fas fa-trash"></i> {t('clear')} {t('cart')}
           </button>
         )}
       </div>
@@ -61,14 +63,14 @@ function Cart() {
               <circle cx="31" cy="38" r="2.5" fill="#1976d2" />
             </svg>
           </div>
-          <div className="cart-empty__msg">Your cart is empty! Start shopping now.</div>
-          <Link to="/products" className="cart-empty__shop-btn">Shop Now</Link>
-          <div className="cart-empty__suggestions-title">Popular Products</div>
+          <div className="cart-empty__msg">{t('emptyCart')}</div>
+          <Link to="/products" className="cart-empty__shop-btn">{t('shopNow')}</Link>
+          <div className="cart-empty__suggestions-title">{t('popularProducts')}</div>
           <div className="cart-empty__suggestion-list">
             {loadingFeatured ? (
-              <div>Loading popular products...</div>
+              <div>{t('loading')} {t('popularProducts').toLowerCase()}...</div>
             ) : featured.length === 0 ? (
-              <div>No popular products found.</div>
+              <div>{t('noPopularProducts')}</div>
             ) : (
               featured.map(product => (
                 <div className="cart-empty__suggestion-card" key={product.id}>
@@ -106,7 +108,7 @@ function Cart() {
                     <button onClick={() => handleQuantity(item.id, item.quantity + 1)}>+</button>
                   </div>
                   <button className="cart__remove" onClick={() => dispatch({ type: 'REMOVE_FROM_CART', id: item.id })}>
-                    Remove
+                    {t('remove')}
                   </button>
                 </div>
               </div>
@@ -114,11 +116,11 @@ function Cart() {
           </div>
           <div className="cart__summary">
             <div className="cart__summary-item">
-              <span>Total:</span>
+              <span>{t('total')}:</span>
               <span>{!isNaN(Number(total)) ? Number(total).toFixed(2) : '0.00'} DH</span>
             </div>
-            <button className="cart__checkout" onClick={() => navigate('/cart-checkout')}>Checkout</button>
-            <Link to="/products" className="cart__continue-shopping">Continue Shopping</Link>
+            <button className="cart__checkout" onClick={() => navigate('/cart-checkout')}>{t('checkout')}</button>
+            <Link to="/products" className="cart__continue-shopping">{t('continueShopping')}</Link>
           </div>
         </>
       )}

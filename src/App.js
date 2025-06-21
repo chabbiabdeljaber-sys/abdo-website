@@ -13,11 +13,13 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import OrderManager from './pages/admin/OrderManager';
 import ProductManager from './pages/admin/ProductManager';
 import { CartProvider } from './context/CartContext';
+import { LanguageProvider } from './context/LanguageContext';
 import './App.css';
 import { auth } from './config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import Contact from './pages/Contact';
 import AdminContact from './pages/admin/AdminContact';
+import ThankYou from './pages/ThankYou';
 
 // Protected Route component for admin routes
 const ProtectedRoute = ({ children }) => {
@@ -120,6 +122,7 @@ const AppRoutes = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/cart-checkout" element={<CartCheckout />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
     </MainLayout>
   );
@@ -127,11 +130,13 @@ const AppRoutes = () => {
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </CartProvider>
+    <LanguageProvider>
+      <CartProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </CartProvider>
+    </LanguageProvider>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import LoadingScreen from '../components/LoadingScreen';
@@ -11,6 +12,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { dispatch } = useCart();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,12 +24,12 @@ function Home() {
         setFeatured(products);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load popular products.');
+        setError(t('error'));
         setLoading(false);
       }
     };
     fetchFeatured();
-  }, []);
+  }, [t]);
 
   const handleBuyNow = (product) => {
     dispatch({
@@ -57,24 +59,24 @@ function Home() {
   return (
     <div className="home">
       <section className="hero">
-        <h1>Welcome to ArbibStore</h1>
-        <p>Fast shipping, great quality, and unbeatable prices on products you love.</p>
-        <Link to="/products" className="hero__cta">Shop Now</Link>
+        <h1>{t('welcome')}</h1>
+        <p>{t('heroSubtitle')}</p>
+        <Link to="/products" className="hero__cta">{t('shopNow')}</Link>
       </section>
       <section className="featured">
-        <h2>Popular Products</h2>
+        <h2>{t('popularProducts')}</h2>
         {loading ? (
           <div className="featured__loading">
             <LoadingScreen 
-              message="Loading Popular Products" 
-              subMessage="Please wait while we fetch our popular products..."
+              message={t('loadingPopularProducts')} 
+              subMessage={t('loadingSubMessage')}
             />
           </div>
         ) : error ? (
           <div>{error}</div>
         ) : (
           <div className="featured__list">
-            {featured.length === 0 && <div>No popular products found.</div>}
+            {featured.length === 0 && <div>{t('noPopularProducts')}</div>}
             {featured.map(product => (
               <div className="featured__item" key={product.id}>
                 <Link to={`/products/${product.id}`} className="featured__media-link">
@@ -87,9 +89,9 @@ function Home() {
                   ${!isNaN(Number(product.product_price)) ? Number(product.product_price).toFixed(2) : '0.00'}
                 </p>
                 <div className="featured__actions">
-                  <button className="featured__add-to-cart-btn" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                  <button className="featured__add-to-cart-btn" onClick={() => handleAddToCart(product)}>{t('addToCart')}</button>
                 </div>
-                <button className="featured__buy-now-btn" onClick={() => handleBuyNow(product)}>Buy Now</button>
+                <button className="featured__buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
               </div>
             ))}
           </div>

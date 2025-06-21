@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import './Navbar.css';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const { cart } = useCart();
+  const { t } = useLanguage();
   const location = useLocation();
 
   // Calculate total items in cart
@@ -25,7 +27,7 @@ function Navbar() {
       <div className="navbar__right-group">
         <div className="navbar__cart-mobile">
           <NavLink to="/cart" className={({ isActive }) => 'navbar__cart-link' + (isActive ? ' active' : '')}>
-            <span className="navbar__cart-icon" aria-label="Cart">
+            <span className="navbar__cart-icon" aria-label={t('cart')}>
               <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/><path d="M2.5 3h2l2.2 13.1a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.7l1.2-7.1H6.1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
             {cartCount > 0 && <span className="navbar__cart-badge">{cartCount}</span>}
@@ -38,12 +40,12 @@ function Navbar() {
         </button>
       </div>
       <div className={`navbar__links${open ? ' open' : ''}`}>
-        <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
-        <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>Products</NavLink>
+        <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>{t('home')}</NavLink>
+        <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>{t('products')}</NavLink>
         {/* Cart link only for desktop */}
         <div className="navbar__cart-desktop">
           <NavLink to="/cart" className={({ isActive }) => 'navbar__cart-link' + (isActive ? ' active' : '')}>
-            <span className="navbar__cart-icon" aria-label="Cart">
+            <span className="navbar__cart-icon" aria-label={t('cart')}>
               <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/><path d="M2.5 3h2l2.2 13.1a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.7l1.2-7.1H6.1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </span>
             {cartCount > 0 && <span className="navbar__cart-badge">{cartCount}</span>}

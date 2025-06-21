@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 import './Footer.css';
 
 function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="footer">
       <div className="container footer__content">
@@ -11,13 +15,16 @@ function Footer() {
           <span className="footer__logo">ArbibStore</span>
         </div>
         <div className="footer__links">
-          <Link to="/">Home</Link>
-          <Link to="/products">Products</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/contact">Contact</Link>
+          <Link to="/">{t('home')}</Link>
+          <Link to="/products">{t('products')}</Link>
+          <Link to="/cart">{t('cart')}</Link>
+          <Link to="/contact">{t('contact')}</Link>
+        </div>
+        <div className="footer__language">
+          <LanguageSelector />
         </div>
         <div className="footer__copyright">
-          © {new Date().getFullYear()} ArbibStore. All rights reserved.
+          © {new Date().getFullYear()} ArbibStore. {t('allRightsReserved')}
         </div>
       </div>
     </footer>

@@ -358,8 +358,6 @@
 }
 .product-list__back-btn {
   position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
   z-index: 10;
   background: #fff;
   color: #1976d2;
