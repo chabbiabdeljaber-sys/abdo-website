@@ -59,7 +59,7 @@
 .product-detail__img-col {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 .product-detail__img-container {
   width: 100%;
