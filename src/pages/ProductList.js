@@ -132,8 +132,8 @@ function ProductList() {
             </Link>
             <div className="product-card__actions">
               <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>{t('addToCart')}</button>
+              <button className="buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
             </div>
-            <button className="buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
           </div>
         ))}
       </div>

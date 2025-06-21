@@ -235,26 +235,28 @@ const ProductManager = () => {
                       {product.category}
                     </div>
                   </div>
-                  <div className="product-card__content">
-                    <h3>{product.product_name}</h3>
-                    <p className="product-card__price">${product.product_price}</p>
-                    <p className="product-card__stock">
-                      <i className="fas fa-box"></i> Stock: {product.product_stock}
-                    </p>
+                  <div className="product-card__info-wrapper">
+                    <div className="product-card__content">
+                      <h3>{product.product_name}</h3>
+                      <p className="product-card__price">${product.product_price}</p>
+                      <p className="product-card__stock">
+                        <i className="fas fa-box"></i> Stock: {product.product_stock}
+                      </p>
+                    </div>
                     <div className="product-card__actions">
-                      <button 
+                      <button
                         className="product-card__edit"
                         onClick={() => handleEdit(product)}
                         title="Edit Product"
                       >
                         <i className="fas fa-edit"></i> Edit
                       </button>
-                      <button 
+                      <button
                         className="product-card__delete"
                         onClick={() => handleDeleteClick(product)}
                         title="Delete Product"
                       >
-                        <i className="fas fa-trash"></i> Delete
+                        <i className="fas fa-trash-alt"></i> Delete
                       </button>
                     </div>
                   </div>

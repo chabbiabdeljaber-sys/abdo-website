@@ -83,15 +83,19 @@ function Home() {
                   <div className="featured__img-container">
                     <img src={product.product_img_url} alt={product.product_name} className="featured__img" />
                   </div>
-                  <h3 className="featured__title">{product.product_name}</h3>
                 </Link>
-                <p className="featured__price">
-                  ${!isNaN(Number(product.product_price)) ? Number(product.product_price).toFixed(2) : '0.00'}
-                </p>
+                <div className="featured__info">
+                  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none' }}>
+                    <h3 className="featured__title">{product.product_name}</h3>
+                  </Link>
+                  <p className="featured__price">
+                    ${!isNaN(Number(product.product_price)) ? Number(product.product_price).toFixed(2) : '0.00'}
+                  </p>
+                </div>
                 <div className="featured__actions">
                   <button className="featured__add-to-cart-btn" onClick={() => handleAddToCart(product)}>{t('addToCart')}</button>
+                  <button className="featured__buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
                 </div>
-                <button className="featured__buy-now-btn" onClick={() => handleBuyNow(product)}>{t('buyNow')}</button>
               </div>
             ))}
           </div>
