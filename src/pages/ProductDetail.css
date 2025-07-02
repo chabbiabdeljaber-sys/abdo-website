@@ -44,6 +44,7 @@
 .product-detail__card {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-self: center;
   gap: 3rem;
   background: #fff;
   padding: 2rem;
