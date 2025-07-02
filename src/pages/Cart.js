@@ -119,7 +119,12 @@ function Cart() {
               <span>{t('total')}:</span>
               <span>{!isNaN(Number(total)) ? Number(total).toFixed(2) : '0.00'} DH</span>
             </div>
-            <button className="cart__checkout" onClick={() => navigate('/cart-checkout')}>{t('checkout')}</button>
+            <button className="cart__checkout" onClick={() => {
+              if (window.fbq) {
+                window.fbq('track', 'InitiateCheckout');
+              }
+              navigate('/cart-checkout');
+            }}>{t('checkout')}</button>
             <Link to="/products" className="cart__continue-shopping">{t('continueShopping')}</Link>
           </div>
         </>

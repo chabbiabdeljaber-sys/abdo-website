@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import './ThankYou.css';
@@ -7,6 +7,16 @@ function ThankYou() {
   const location = useLocation();
   const { t } = useLanguage();
   const { orderId, total } = location.state || {};
+
+  useEffect(() => {
+    if (window.fbq && orderId && total) {
+      window.fbq('track', 'Purchase', {
+        value: Number(total),
+        currency: 'USD', // Change to your currency if needed
+        order_id: orderId
+      });
+    }
+  }, [orderId, total]);
 
   return (
     <div className="thank-you-page">

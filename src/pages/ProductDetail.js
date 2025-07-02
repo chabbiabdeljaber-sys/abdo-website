@@ -45,6 +45,14 @@ function ProductDetail() {
   if (!product) return <div>{t('noProductsFound')}</div>;
 
   const handleBuyNow = () => {
+    if (window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_ids: [product.id],
+        content_name: product.product_name || product.title,
+        value: product.product_price || product.price,
+        currency: 'USD'
+      });
+    }
     dispatch({ 
       type: 'BUY_NOW', 
       product: {
@@ -100,16 +108,26 @@ function ProductDetail() {
           <div className="product-detail__actions">
             <button
               className="product-detail__add"
-              onClick={() => dispatch({
-                type: 'ADD_TO_CART',
-                product: {
-                  ...product,
-                  quantity,
-                  title: product.product_name || product.title,
-                  price: product.product_price || product.price,
-                  image: product.product_img_url || product.image,
+              onClick={() => {
+                if (window.fbq) {
+                  window.fbq('track', 'AddToCart', {
+                    content_ids: [product.id],
+                    content_name: product.product_name || product.title,
+                    value: product.product_price || product.price,
+                    currency: 'USD'
+                  });
                 }
-              })}
+                dispatch({
+                  type: 'ADD_TO_CART',
+                  product: {
+                    ...product,
+                    quantity,
+                    title: product.product_name || product.title,
+                    price: product.product_price || product.price,
+                    image: product.product_img_url || product.image,
+                  }
+                });
+              }}
             >
               <i className="fas fa-cart-plus"></i> {t('addToCart')}
             </button>

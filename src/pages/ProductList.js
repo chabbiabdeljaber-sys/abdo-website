@@ -56,6 +56,14 @@ function ProductList() {
   });
 
   const handleBuyNow = (product) => {
+    if (window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_ids: [product.id],
+        content_name: product.product_name || product.title,
+        value: product.product_price || product.price,
+        currency: 'USD'
+      });
+    }
     dispatch({
       type: 'BUY_NOW',
       product: {
@@ -69,6 +77,14 @@ function ProductList() {
   };
 
   const handleAddToCart = (product) => {
+    if (window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_ids: [product.id],
+        content_name: product.product_name || product.title,
+        value: product.product_price || product.price,
+        currency: 'USD'
+      });
+    }
     dispatch({
       type: 'ADD_TO_CART',
       product: {
