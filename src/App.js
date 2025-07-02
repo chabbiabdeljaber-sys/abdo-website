@@ -20,6 +20,22 @@ import { onAuthStateChanged } from 'firebase/auth';
 import Contact from './pages/Contact';
 import AdminContact from './pages/admin/AdminContact';
 import ThankYou from './pages/ThankYou';
+import ReactPixel from 'react-facebook-pixel';
+
+// Initialize Meta Pixel
+const options = {
+  autoConfig: true,
+  debug: false,
+};
+ReactPixel.init('1089323955929554', {}, options);
+
+// Custom hook to track page views on route change
+function usePageViewPixel() {
+  const location = useLocation();
+  useEffect(() => {
+    ReactPixel.pageView();
+  }, [location]);
+}
 
 // Protected Route component for admin routes
 const ProtectedRoute = ({ children }) => {
@@ -69,6 +85,7 @@ const MainLayout = ({ children }) => {
 };
 
 const AppRoutes = () => {
+  usePageViewPixel();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin') || location.pathname === '/admingate';
 

@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import '../pages/Cart.css';
+import ReactPixel from 'react-facebook-pixel';
 
 function Cart() {
   const { cart, dispatch } = useCart();
@@ -120,9 +121,7 @@ function Cart() {
               <span>{!isNaN(Number(total)) ? Number(total).toFixed(2) : '0.00'} DH</span>
             </div>
             <button className="cart__checkout" onClick={() => {
-              if (window.fbq) {
-                window.fbq('track', 'InitiateCheckout');
-              }
+              ReactPixel.track('InitiateCheckout');
               navigate('/cart-checkout');
             }}>{t('checkout')}</button>
             <Link to="/products" className="cart__continue-shopping">{t('continueShopping')}</Link>

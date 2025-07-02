@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import ReactPixel from 'react-facebook-pixel';
 import './ThankYou.css';
 
 function ThankYou() {
@@ -9,8 +10,8 @@ function ThankYou() {
   const { orderId, total } = location.state || {};
 
   useEffect(() => {
-    if (window.fbq && orderId && total) {
-      window.fbq('track', 'Purchase', {
+    if (orderId && total) {
+      ReactPixel.track('Purchase', {
         value: Number(total),
         currency: 'USD', // Change to your currency if needed
         order_id: orderId

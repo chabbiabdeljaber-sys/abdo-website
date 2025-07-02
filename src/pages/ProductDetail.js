@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 import LoadingScreen from '../components/LoadingScreen';
 import '../pages/ProductDetail.css';
+import ReactPixel from 'react-facebook-pixel';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -45,14 +46,12 @@ function ProductDetail() {
   if (!product) return <div>{t('noProductsFound')}</div>;
 
   const handleBuyNow = () => {
-    if (window.fbq) {
-      window.fbq('track', 'AddToCart', {
-        content_ids: [product.id],
-        content_name: product.product_name || product.title,
-        value: product.product_price || product.price,
-        currency: 'USD'
-      });
-    }
+    ReactPixel.track('AddToCart', {
+      content_ids: [product.id],
+      content_name: product.product_name || product.title,
+      value: product.product_price || product.price,
+      currency: 'USD'
+    });
     dispatch({ 
       type: 'BUY_NOW', 
       product: {
@@ -109,14 +108,12 @@ function ProductDetail() {
             <button
               className="product-detail__add"
               onClick={() => {
-                if (window.fbq) {
-                  window.fbq('track', 'AddToCart', {
-                    content_ids: [product.id],
-                    content_name: product.product_name || product.title,
-                    value: product.product_price || product.price,
-                    currency: 'USD'
-                  });
-                }
+                ReactPixel.track('AddToCart', {
+                  content_ids: [product.id],
+                  content_name: product.product_name || product.title,
+                  value: product.product_price || product.price,
+                  currency: 'USD'
+                });
                 dispatch({
                   type: 'ADD_TO_CART',
                   product: {
