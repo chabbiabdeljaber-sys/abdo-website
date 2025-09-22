@@ -14,7 +14,7 @@ const translations = {
     selectLanguage: 'Select Language',
     
     // Home page
-    welcome: 'Welcome to ArbibStore',
+    welcome: 'Welcome to Abdomode',
     heroSubtitle: 'Fast shipping, great quality, and unbeatable prices on products you love.',
     shopNow: 'Shop Now',
     popularProducts: 'Popular Products',
@@ -262,4 +262,5 @@ export const LanguageProvider = ({ children }) => {
       {children}
     </LanguageContext.Provider>
   );
+
 }; 
