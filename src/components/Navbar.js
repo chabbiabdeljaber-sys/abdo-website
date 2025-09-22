@@ -20,8 +20,8 @@ function Navbar() {
     <nav className={`navbar${open ? ' menu-open' : ''}`}>
       <div className="navbar__logo">
         <NavLink to="/" className="navbar__logo-link">
-          <img src="/images/logo.png" alt="ArbibStore Logo" className="navbar__logo-img" />
-          <span>ArbibStore</span>
+          <img src="/images/logo.png" alt="Abdomode Logo" className="navbar__logo-img" />
+          <span>Abdomode</span>
         </NavLink>
       </div>
       <div className="navbar__right-group">
