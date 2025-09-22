@@ -11,8 +11,8 @@ function Footer() {
     <footer className="footer">
       <div className="container footer__content">
         <div className="footer__brand">
-          <img src="/images/logo.png" alt="ArbibStore Logo" className="footer__logo-img" />
-          <span className="footer__logo">ArbibStore</span>
+          <img src="/images/logo.png" alt="Abdomode Logo" className="footer__logo-img" />
+          <span className="footer__logo">Abdomode</span>
         </div>
         <div className="footer__links">
           <Link to="/">{t('home')}</Link>
@@ -30,5 +30,6 @@ function Footer() {
     </footer>
   );
 }
+
 
 export default Footer; 
